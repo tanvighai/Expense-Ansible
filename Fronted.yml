@@ -6,7 +6,7 @@
      - name: Installing Nginx
        ansible.builtin.dnf:
          name: nginx
-         state: Present
+         state: present
 
      - name: Placing Expense Config File in nginx
        ansible.builtin.copy:
