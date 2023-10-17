@@ -19,47 +19,21 @@
          path: /usr/share/nginx/html
          state: absent
 
-     - name: Download frontend code
-       ansible.builtin.get_url:
-         url: https://expense-artifacts.s3.amazonaws.com/frontend.zip
-         dest: /tmp/frontend.zip
-     #- name: Extracting Frontend code
+     - name: Download frontend code and Extract
+       ansible.builtin.unarchive:
+         src: https://expense-artifacts.s3.amazonaws.com/frontend.zip
+         dest: /usr/share/nginx/html
+         remote_src: yes
 
-  # - name: Extracting frontend code
-   #- name: Starting Nginx Services
-
-
-
-
-
-
-#cp expense.conf /etc/nginx/default.d/expense.conf
+     - name: Starting Nginx Services
+       ansible.builtin.systemd:
+           name: nginx
+           state: restarted
+           enabled: yes
 
 
 
 
- # source common.sh
-  #component=frontend
 
 
-  #echo installing Nginx
-  #dnf install nginx -y &>>$log_file
 
-
-  #stat_check()
-  #echo placing expense confif file in Ngnix
-  #cp expense.conf /etc/nginx/default.d/expense.conf &>>$log_file
-  #stat_check()
-
-  #echo removing old Nginx content
-  #rm -rf /usr/share/nginx/html/* &>>$log_file
-  #stat_check()
-  #cd /usr/share/nginx/html
-  #download_and_extract
-  #stat_check()
-  #echo starting Ngnix service
-  #systemctl enable nginx &>>$log_file
-  #stat_check()
-  #systemctl restart nginx &>>$log_file
-
-  #stat_check()
