@@ -23,7 +23,7 @@
        ansible.builtin.get_url:
          url: https://expense-artifacts.s3.amazonaws.com/frontend.zip
          dest: /tmp/frontend.zip
-     - name: Extracting Frontend code
+     #- name: Extracting Frontend code
 
   # - name: Extracting frontend code
    #- name: Starting Nginx Services
