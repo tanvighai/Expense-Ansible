@@ -1,24 +1,21 @@
-
 - name: backendSetup
   hosts: all
   become: yes
   tasks:
     - name: Installing Nodejs
       ansible.builtin.shell: curl -sl https://rpm.nodesource.com/setup_lts.x | bash
-        name: Install NodeJS
-        ansible.builtin.dnf:
-          name: nodejs
+
+    - name: Install NodeJS
+      ansible.builtin.dnf:
+        name: nodejs
 
 
     - name: copy backend service file
       ansible.builtin.copy:
         src: expense.conf
-        dest: /etc/nginx/default.d/expense.conf
+        dest: /etc/systemd/system/backend.conf
 
-    - name: Removing old Nginx content
-      ansible.builtin.file:
-        src: backend.service
-        dest: /etc/systemd/system/backend.service
+
 
     - name: Add application user
       ansible.builtin.user:
@@ -42,7 +39,7 @@
 
     - name: install nodeJS dependencies
       ansible.builtin.shell: npm install
-        args:
+      args:
         chdir: /app
 
     - name: Install mysql client
@@ -58,20 +55,3 @@
         deamon-reload: yes
 
 
-
-
-
-
-
-
-#[Unit]
- # Description = Backend Service
-
-  #[Service]
-  #User=expense
-  #Environment=DB_HOST=m1.tanvi12online.net
-  #ExecStart=/bin/node /app/index.js
-  #SyslogIdentifier=backend
-
-  #[Install]
-  #WantedBy=multi-user.target
